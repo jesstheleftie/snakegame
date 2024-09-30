@@ -1,0 +1,97 @@
+body{
+    margin:0;
+    width:calc(100vw - 20px);
+}
+
+#app-container{
+    /* width: 100vw; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:100vh;
+}
+#app-box{
+    height: 730px;
+    width: 600px;
+    background-color: rgb(149, 107, 44);
+    border-radius: 10px;
+}
+
+#app-title{
+    font-family:"lemon", serif;
+    text-align: center;
+    padding-top: 30px;
+    font-size: 35px;
+    color: rgb(216, 168, 47);
+    text-shadow: 2px 3px 0 rgb(11, 11, 11);
+    margin: 0;
+
+}
+
+#score-container{
+    display: flex;
+    width: 100vh;
+    margin-top: 0;
+    align-items: start;
+    
+}
+
+#score{
+    font-family: "Istok Web", sans-serif;
+    color: rgb(236, 209, 169);
+    font-size: 20px;
+    /* transform: translateY(20px); */
+    font-weight: bold;
+    margin:0
+
+}
+#score-apple{
+    height: 30px;
+    width: 30px;
+    padding: 0 30px;
+
+}
+
+#board-container{
+    display: flex;
+
+    justify-content: center;
+  
+
+}
+#board{
+    display: grid;
+    grid-template-columns: repeat(15,1fr);
+    grid-template-columns: repeat(15. 1fr);
+    width: 550px;
+    height: 550px;
+    background-color: rgb(236, 209, 169);
+    border: 8px solid rgb(95, 63, 46);
+    /* transform: translateY(-135px); */
+
+}
+
+.grid-cell {
+    width: 100%;
+    height: 100%;
+}
+
+#board div:nth-child(odd) {
+    background-color: rgb(236, 209, 169); 
+}
+
+#board div:nth-child(even) {
+    background-color: rgb(115, 156, 39); 
+}
+
+.redApple{
+    background-color: red !important;
+}
+
+.snakeBody{
+    background-color: darkgreen !important;;
+}
+
+.snakeHead{
+    background-color: brown !important;;
+}
