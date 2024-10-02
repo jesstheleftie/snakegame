@@ -4,7 +4,6 @@ body{
 }
 
 #app-container{
-    /* width: 100vw; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -40,7 +39,6 @@ body{
     font-family: "Istok Web", sans-serif;
     color: rgb(236, 209, 169);
     font-size: 20px;
-    /* transform: translateY(20px); */
     font-weight: bold;
     margin:0
 
@@ -62,13 +60,11 @@ body{
 #board{
     display: grid;
     grid-template-columns: repeat(15,1fr);
-    grid-template-columns: repeat(15. 1fr);
+    grid-template-rows: repeat(15, 1fr);
     width: 550px;
     height: 550px;
     background-color: rgb(236, 209, 169);
     border: 8px solid rgb(95, 63, 46);
-    /* transform: translateY(-135px); */
-
 }
 
 .grid-cell {
@@ -90,8 +86,32 @@ body{
 
 .snakeBody{
     background-color: darkgreen !important;;
+    z-index: 2;
+}
+.snakeTail{
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
 }
 
 .snakeHead{
-    background-color: brown !important;;
+    background-color: darkgreen !important;;
+    border-top:5px solid red;
+    transform: rotate(90deg);
+    border-top-left-radius: 25%;
+    border-top-right-radius: 25%;
+    z-index: 2;
+}
+
+.eyeBox{
+    background-color:darkgreen !important;; 
+    width:100%;
+    display:flex; 
+    justify-content:center; 
+}
+.eyeBall{
+    width:8px; 
+    height:8px; 
+    margin:5px 3px; 
+    border-radius:50%; 
+    background-color:yellow
 }
