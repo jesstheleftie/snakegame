@@ -35,7 +35,7 @@ const generateRandomApple = () => {
     x: Math.floor(Math.random() * boardSize),
     y: Math.floor(Math.random() * boardSize),
   };
-  console.log("newApple", newApple);
+
   let isOnSnake = false;
 
   for (let i = 0; i < snake.length; i++) {
@@ -54,11 +54,13 @@ const snakeMove = () => {
 
   if (head.x < 0 || head.x >= boardSize || head.y < 0 || head.y >= boardSize) {
     gameStatus = "over";
+
     return;
   }
   for (let i = 0; i < snake.length; i++) {
     if (snake[i].x === head.x && snake[i].y === head.y) {
       gameStatus = "over";
+
       return;
     }
   }
@@ -67,12 +69,11 @@ const snakeMove = () => {
   if (head.x === newApple.x && head.y === newApple.y) {
     generateRandomApple();
     score += 1;
-    let updatedScore = document.querySelector('#score')
-        updatedScore.innerText= `SCORE: ${score}`
+    let updatedScore = document.querySelector("#score");
+    updatedScore.innerText = `SCORE: ${score}`;
   } else {
     snake.pop();
   }
-  console.log("snake", snake);
 };
 
 snakeMove();
@@ -80,30 +81,31 @@ snakeMove();
 //Event Listners
 window.addEventListener("keydown", (event) => {
   let snakeHead = document.querySelector(".snakeHead");
-  if (event.key === "ArrowUp") {
+  let directionOfNeck = neckDirection();
+  if (event.key === "ArrowUp" && directionOfNeck !== "up") {
     if (direction.y === 0) {
       direction = { x: 0, y: -1 };
+      headDirection = "up";
+      snakeHead.style.transform = "rotate(0deg)";
     }
-    headDirection = "up";
-    snakeHead.style.transform = "rotate(0deg)";
-  } else if (event.key === "ArrowDown") {
+  } else if (event.key === "ArrowDown" && directionOfNeck !== "down") {
     if (direction.y === 0) {
       direction = { x: 0, y: 1 };
+      headDirection = "down";
+      snakeHead.style.transform = "rotate(180deg)";
     }
-    headDirection = "down";
-    snakeHead.style.transform = "rotate(180deg)";
-  } else if (event.key === "ArrowLeft") {
+  } else if (event.key === "ArrowLeft" && directionOfNeck !== "left") {
     if (direction.x === 0) {
       direction = { x: -1, y: 0 };
+      headDirection = "left";
+      snakeHead.style.transform = "rotate(270deg)";
     }
-    headDirection = "left";
-    snakeHead.style.transform = "rotate(270deg)";
-  } else if (event.key === "ArrowRight") {
+  } else if (event.key === "ArrowRight" && directionOfNeck !== "right") {
     if (direction.x === 0) {
       direction = { x: 1, y: 0 };
+      headDirection = "right";
+      snakeHead.style.transform = "rotate(90deg)";
     }
-    headDirection = "right";
-    snakeHead.style.transform = "rotate(90deg)";
   }
 });
 
@@ -128,13 +130,30 @@ const tailDirection = () => {
   }
   return result;
 };
-
-
-
+const neckDirection = () => {
+  let snakeHead = snake[0];
+  let snakeSecond = snake[1];
+  let result = "";
+  if (snakeHead.x === snakeSecond.x) {
+    //look at y
+    if (snakeHead.y - snakeSecond.y > 0) {
+      result = "up";
+    } else {
+      result = "down";
+    }
+  } else {
+    //look at x
+    if (snakeHead.x - snakeSecond.x > 0) {
+      result = "left";
+    } else {
+      result = "right";
+    }
+  }
+  return result;
+};
 
 //function to render update to DOM
 const render = () => {
-  console.log("render");
   document.querySelectorAll(".board-box").forEach((eachTile, index) => {
     if (eachTile.classList.contains("snakeBody")) {
       eachTile.classList.remove("snakeBody");
@@ -192,8 +211,15 @@ const render = () => {
         eyeBox.classList.add("eyeBox");
         let leftEyeBall = document.createElement("span");
         leftEyeBall.classList.add("eyeBall");
+        if (gameStatus === "over") {
+          leftEyeBall.classList.add("deadEyes");
+        }
         let rightEyeBall = document.createElement("span");
         rightEyeBall.classList.add("eyeBall");
+        if (gameStatus === "over") {
+          rightEyeBall.classList.add("deadEyes");
+        }
+
         eyeBox.appendChild(leftEyeBall);
         eyeBox.appendChild(rightEyeBall);
         headElement.appendChild(eyeBox);
@@ -204,6 +230,13 @@ const render = () => {
   let newAppleBox = document.getElementById(`${newApple.x},${newApple.y}`);
   if (newAppleBox) {
     newAppleBox.classList.add("redApple");
+    newAppleBox.style.transform = "";
+    const appleImage = document.createElement("img");
+    appleImage.src =
+      "https://img.icons8.com/external-smashingstocks-flat-smashing-stocks/66/external-Apple-food-smashingstocks-flat-smashing-stocks.png";
+    appleImage.style.maxWidth = "100%";
+    appleImage.style.maxHeight = "100%";
+    newAppleBox.appendChild(appleImage);
   }
 };
 
@@ -213,18 +246,13 @@ render();
 
 const gameLoop = () => {
   if (gameStatus === "over") {
-    console.log("Game Over!!!!");
+    render();
     return;
   }
 
-  console.log("Game loop is running");
-  console.log("current snake posisiton", snake);
-  console.log("current Apple position", newApple);
-
   if (gameStatus === "running") snakeMove();
   render();
-  setTimeout(gameLoop, 1000-(score*20));
+  setTimeout(gameLoop, 500 * Math.pow(0.9, score));
 };
 
 gameLoop();
-
