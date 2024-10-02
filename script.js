@@ -9,7 +9,7 @@ const firstApple = { x: 9, y: 10 };
 let newApple = firstApple;
 let direction = { x: 1, y: 0 };
 let headDirection = "right";
-let gameStatus = "running";
+let gameStatus = "";
 let score = 0;
 
 // Board Creation Functions
@@ -54,6 +54,8 @@ const snakeMove = () => {
 
   if (head.x < 0 || head.x >= boardSize || head.y < 0 || head.y >= boardSize) {
     gameStatus = "over";
+    let yourScoreElement = document.querySelector(`#your-score`)
+    yourScoreElement.innerText = `Your Score: ${score}`
 
     return;
   }
@@ -82,33 +84,48 @@ snakeMove();
 window.addEventListener("keydown", (event) => {
   let snakeHead = document.querySelector(".snakeHead");
   let directionOfNeck = neckDirection();
+  let message = document.querySelector('#start-message');
   if (event.key === "ArrowUp" && directionOfNeck !== "up") {
     if (direction.y === 0) {
       direction = { x: 0, y: -1 };
       headDirection = "up";
       snakeHead.style.transform = "rotate(0deg)";
+      message.style.display='none';
+      gameStatus="running";
     }
   } else if (event.key === "ArrowDown" && directionOfNeck !== "down") {
     if (direction.y === 0) {
       direction = { x: 0, y: 1 };
       headDirection = "down";
       snakeHead.style.transform = "rotate(180deg)";
+       message.style.display='none';
+       gameStatus="running";
     }
   } else if (event.key === "ArrowLeft" && directionOfNeck !== "left") {
     if (direction.x === 0) {
       direction = { x: -1, y: 0 };
       headDirection = "left";
       snakeHead.style.transform = "rotate(270deg)";
+       message.style.display='none';
+       gameStatus="running";
     }
   } else if (event.key === "ArrowRight" && directionOfNeck !== "right") {
     if (direction.x === 0) {
       direction = { x: 1, y: 0 };
       headDirection = "right";
       snakeHead.style.transform = "rotate(90deg)";
+       message.style.display='none';
+       gameStatus="running";
     }
   }
 });
 
+button.addEventListener('click', ()=>{
+    let playAgainButton=document.querySelector(`#play-again`)
+    gameStatus='running'
+    
+
+})
 const tailDirection = () => {
   let snakeTail = snake[snake.length - 1];
   let snakeSecondLast = snake[snake.length - 2];
