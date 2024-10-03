@@ -1,3 +1,4 @@
+
 //Global Variables
 const boardSize = 15;
 let snake = [
@@ -85,6 +86,12 @@ const snakeMove = () => {
       highscoreElement.innerText = `HIGH SCORE: ${localHighScore}`;
       yourScoreElement.innerText = `Your Score: ${score}`;
       firstStart = false;
+      if (score>initialLocalHighScore){
+        party.confetti(gameOverContainer), {
+            count: party.variation.range(20, 40),
+            spread:60
+          };
+      }
     }, 500);
     return;
   }
@@ -98,6 +105,12 @@ const snakeMove = () => {
         highscoreElement.innerText = `HIGH SCORE: ${localHighScore}`;
         yourScoreElement.innerText = `Your Score: ${score}`;
         firstStart = false;
+        if (score>initialLocalHighScore){
+            party.confetti(gameOverContainer), {
+                count: party.variation.range(20, 40),
+                spread:60
+              };
+          }
       }, 500);
       return;
     }
@@ -114,6 +127,7 @@ const snakeMove = () => {
 
     if (!highScore || score > highScore) {
       localStorage.setItem("highScore", score);
+
     }
   } else {
     snake.pop();
