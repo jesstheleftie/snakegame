@@ -432,10 +432,9 @@ const gameLoop = () => {
     render();
     return;
   }
-
   if (gameStatus === "running") snakeMove();
   render();
-  setTimeout(gameLoop, 500 * Math.pow(0.9, score));
+  setTimeout(gameLoop, 300 * Math.pow(0.95, score));
 };
 
 gameLoop();
