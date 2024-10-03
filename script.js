@@ -94,12 +94,12 @@ const snakeMove = () => {
       firstStart = false;
       if (score>initialLocalHighScore){
         playBeatHighScoreSound();
+        beatHighScoreMessageElement.innerText=`You beat the high score!`
         party.confetti(gameOverContainer), {
             count: party.variation.range(20, 40),
             spread:60
           };
-        beatHighScoreMessageElement.innerText=`You beat the high score!`
-      }
+      } else {beatHighScoreMessageElement.innerText=""}
     }, 500);
     return;
   }
@@ -115,12 +115,13 @@ const snakeMove = () => {
         firstStart = false;
         if (score>initialLocalHighScore){
             playBeatHighScoreSound();
+            beatHighScoreMessageElement.innerText=`You beat the high score!`
             party.confetti(gameOverContainer), {
                 count: party.variation.range(20, 40),
                 spread:60
               };
             
-          }
+          } else {beatHighScoreMessageElement.innerText=""}
       }, 500);
       return;
     }
