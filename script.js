@@ -1,4 +1,3 @@
-
 //Global Variables
 const boardSize = 15;
 let snake = [
@@ -71,34 +70,34 @@ const playGameOverSound = () => {
 
 //Beat High Score sound
 const beatHighScoreSound = new Audio("level-up.mp3");
-const playBeatHighScoreSound =()=>{
-    beatHighScoreSound.play();
+const playBeatHighScoreSound = () => {
+  beatHighScoreSound.play();
 };
 
-//Functions for sound on and off 
-const soundButton = document.querySelector('#sound-button')
-const soundIcon = document.querySelector('#sound-img')
+//Functions for sound on and off
+const soundButton = document.querySelector("#sound-button");
+const soundIcon = document.querySelector("#sound-img");
 
-
-soundButton.addEventListener('click',()=>{
-if (soundButton.classList.contains('sound-on')){
-    soundButton.classList.remove('sound-on');
-    soundButton.classList.add('sound-off');
-    soundIcon.src="https://img.icons8.com/material-rounded/24/no-audio--v1.png"
-    soundIcon.alt="sound off image"
-    appleSound.muted = true
-    gameOverSound.muted = true
-    beatHighScoreSound.muted = true
-} else {
-    soundButton.classList.remove('sound-off')
-    soundButton.classList.add('sound-on')
-    soundIcon.src="https://img.icons8.com/material-rounded/24/speaker.png"
-    soundIcon.alt="sound on image"
-    appleSound.muted = false
-    gameOverSound.muted = false
-    beatHighScoreSound.muted = false
-}
-})
+soundButton.addEventListener("click", () => {
+  if (soundButton.classList.contains("sound-on")) {
+    soundButton.classList.remove("sound-on");
+    soundButton.classList.add("sound-off");
+    soundIcon.src =
+      "https://img.icons8.com/material-rounded/24/no-audio--v1.png";
+    soundIcon.alt = "sound off image";
+    appleSound.muted = true;
+    gameOverSound.muted = true;
+    beatHighScoreSound.muted = true;
+  } else {
+    soundButton.classList.remove("sound-off");
+    soundButton.classList.add("sound-on");
+    soundIcon.src = "https://img.icons8.com/material-rounded/24/speaker.png";
+    soundIcon.alt = "sound on image";
+    appleSound.muted = false;
+    gameOverSound.muted = false;
+    beatHighScoreSound.muted = false;
+  }
+});
 // Snake movement function, responsible for snake moving,game-over conditions,score and reset
 const snakeMove = () => {
   const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
@@ -106,7 +105,9 @@ const snakeMove = () => {
   let yourScoreElement = document.querySelector(`#your-score`);
   let highscoreElement = document.querySelector("#high-score");
   localHighScore = localStorage.getItem("highScore") || 0;
-  let beatHighScoreMessageElement = document.querySelector('#beat-high-score-message');
+  let beatHighScoreMessageElement = document.querySelector(
+    "#beat-high-score-message"
+  );
 
   if (head.x < 0 || head.x >= boardSize || head.y < 0 || head.y >= boardSize) {
     gameStatus = "";
@@ -117,14 +118,17 @@ const snakeMove = () => {
       highscoreElement.innerText = `HIGH SCORE: ${localHighScore}`;
       yourScoreElement.innerText = `Your Score: ${score}`;
       firstStart = false;
-      if (score>initialLocalHighScore){
+      if (score > initialLocalHighScore) {
         playBeatHighScoreSound();
-        beatHighScoreMessageElement.innerText=`You beat the high score!`
-        party.confetti(gameOverContainer), {
+        beatHighScoreMessageElement.innerText = `You beat the high score!`;
+        party.confetti(gameOverContainer),
+          {
             count: party.variation.range(20, 40),
-            spread:60
+            spread: 60,
           };
-      } else {beatHighScoreMessageElement.innerText=""}
+      } else {
+        beatHighScoreMessageElement.innerText = "";
+      }
     }, 500);
     return;
   }
@@ -138,15 +142,17 @@ const snakeMove = () => {
         highscoreElement.innerText = `HIGH SCORE: ${localHighScore}`;
         yourScoreElement.innerText = `Your Score: ${score}`;
         firstStart = false;
-        if (score>initialLocalHighScore){
-            playBeatHighScoreSound();
-            beatHighScoreMessageElement.innerText=`You beat the high score!`
-            party.confetti(gameOverContainer), {
-                count: party.variation.range(20, 40),
-                spread:60
-              };
-            
-          } else {beatHighScoreMessageElement.innerText=""}
+        if (score > initialLocalHighScore) {
+          playBeatHighScoreSound();
+          beatHighScoreMessageElement.innerText = `You beat the high score!`;
+          party.confetti(gameOverContainer),
+            {
+              count: party.variation.range(20, 40),
+              spread: 60,
+            };
+        } else {
+          beatHighScoreMessageElement.innerText = "";
+        }
       }, 500);
       return;
     }
@@ -163,7 +169,6 @@ const snakeMove = () => {
 
     if (!highScore || score > highScore) {
       localStorage.setItem("highScore", score);
-
     }
   } else {
     snake.pop();
@@ -177,6 +182,9 @@ window.addEventListener("keydown", (event) => {
   let snakeHead = document.querySelector(".snakeHead");
   let directionOfNeck = neckDirection();
   let message = document.querySelector("#start-message");
+  //Unclick the sound button to prevent border weirdness
+  document.getElementById("sound-button").blur();
+
   if (!snakeAlive) {
     return;
   }
@@ -221,34 +229,34 @@ window.addEventListener("keydown", (event) => {
 });
 
 //set event listener for hit enter in game over container
-window.addEventListener ('keydown',(event)=>{
-    let gameOverContainer = document.querySelector("#gameover-container");
-    
-    if(event.key === 'Enter' && gameOverContainer.style.display === "inherit"){
-  gameOverContainer.style.display = "none";
-  let startMessage = document.querySelector("#start-message");
-  startMessage.style.display = "inherit";
-  gameStatus = "";
-  snakeAlive = true;
-  headDirection = "right";
-  score = 0;
-  let updatedScore = document.querySelector("#score");
-  updatedScore.innerText = `SCORE: ${score}`;
-  snake = [
-    { x: 3, y: 10 },
-    { x: 2, y: 10 },
-    { x: 1, y: 10 },
-  ];
-  //highscore storage and display
-  initialLocalHighScore = localHighScore;
-  document.getElementById(
-    "high-score-2"
-  ).innerText = `HIGH SCORE: ${initialLocalHighScore}`;
-  newApple = firstApple;
-  direction = { x: 1, y: 0 };
-  render();
-    }
-})
+window.addEventListener("keydown", (event) => {
+  let gameOverContainer = document.querySelector("#gameover-container");
+
+  if (event.key === "Enter" && gameOverContainer.style.display === "inherit") {
+    gameOverContainer.style.display = "none";
+    let startMessage = document.querySelector("#start-message");
+    startMessage.style.display = "inherit";
+    gameStatus = "";
+    snakeAlive = true;
+    headDirection = "right";
+    score = 0;
+    let updatedScore = document.querySelector("#score");
+    updatedScore.innerText = `SCORE: ${score}`;
+    snake = [
+      { x: 3, y: 10 },
+      { x: 2, y: 10 },
+      { x: 1, y: 10 },
+    ];
+    //highscore storage and display
+    initialLocalHighScore = localHighScore;
+    document.getElementById(
+      "high-score-2"
+    ).innerText = `HIGH SCORE: ${initialLocalHighScore}`;
+    newApple = firstApple;
+    direction = { x: 1, y: 0 };
+    render();
+  }
+});
 let button = document.getElementById(`play-again`);
 button.addEventListener("click", () => {
   let gameOverContainer = document.querySelector("#gameover-container");
