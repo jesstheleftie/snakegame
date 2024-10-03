@@ -17,7 +17,7 @@ let localHighScore = localStorage.getItem("highScore") || 0;
 let initialLocalHighScore = localStorage.getItem("highScore") || 0;
 document.getElementById(
   "high-score-2"
-).innerText = `🏆 HIGH SCORE: ${initialLocalHighScore}`;
+).innerText = `HIGH SCORE: ${initialLocalHighScore}`;
 
 // Board Creation Functions
 
@@ -68,7 +68,7 @@ const snakeMove = () => {
     gameStatus = "";
 
     gameOverContainer.style.display = "inherit";
-    highscoreElement.innerText = `🏆 HIGH SCORE: ${localHighScore}`;
+    highscoreElement.innerText = `HIGH SCORE: ${localHighScore}`;
     yourScoreElement.innerText = `Your Score: ${score}`;
     firstStart = false;
 
@@ -79,7 +79,7 @@ const snakeMove = () => {
       gameStatus = "";
 
       gameOverContainer.style.display = "inherit";
-      highscoreElement.innerText = `🏆 HIGH SCORE: ${localHighScore}`;
+      highscoreElement.innerText = `HIGH SCORE: ${localHighScore}`;
       yourScoreElement.innerText = `Your Score: ${score}`;
       firstStart = false;
       return;
