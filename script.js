@@ -12,7 +12,7 @@ let headDirection = "right";
 let gameStatus = "";
 let score = 0;
 let firstStart = true;
-
+let snakeAlive = true;
 let localHighScore = localStorage.getItem("highScore") || 0;
 let initialLocalHighScore = localStorage.getItem("highScore") || 0;
 document.getElementById(
@@ -57,16 +57,16 @@ const generateRandomApple = () => {
 };
 
 // Function for chomp sound
-const appleSound = new Audio('chomp.mp3');
-const playAppleSound= ()=>{
-  appleSound.play();  
-}
+const appleSound = new Audio("chomp.mp3");
+const playAppleSound = () => {
+  appleSound.play();
+};
 
 //Function for game over sound
-const gameOverSound = new Audio('game-over.mp3');
-const playGameOverSound = ()=>{
-    gameOverSound.play();
-}
+const gameOverSound = new Audio("game-over.mp3");
+const playGameOverSound = () => {
+  gameOverSound.play();
+};
 
 // Snake movement function, responsible for snake moving,game-over conditions,score and reset
 const snakeMove = () => {
@@ -78,27 +78,27 @@ const snakeMove = () => {
 
   if (head.x < 0 || head.x >= boardSize || head.y < 0 || head.y >= boardSize) {
     gameStatus = "";
+    snakeAlive = false;
     playGameOverSound();
-    setTimeout(()=>{
-
-        gameOverContainer.style.display = "inherit";
-        highscoreElement.innerText = `HIGH SCORE: ${localHighScore}`;
-        yourScoreElement.innerText = `Your Score: ${score}`;
-        firstStart = false;
-    }, 500)
+    setTimeout(() => {
+      gameOverContainer.style.display = "inherit";
+      highscoreElement.innerText = `HIGH SCORE: ${localHighScore}`;
+      yourScoreElement.innerText = `Your Score: ${score}`;
+      firstStart = false;
+    }, 500);
     return;
-
   }
   for (let i = 0; i < snake.length; i++) {
     if (snake[i].x === head.x && snake[i].y === head.y) {
       gameStatus = "";
+      snakeAlive = false;
       playGameOverSound();
-        setTimeout(()=>{
-            gameOverContainer.style.display = "inherit";
-            highscoreElement.innerText = `HIGH SCORE: ${localHighScore}`;
-            yourScoreElement.innerText = `Your Score: ${score}`;
-            firstStart = false;
-        },500)
+      setTimeout(() => {
+        gameOverContainer.style.display = "inherit";
+        highscoreElement.innerText = `HIGH SCORE: ${localHighScore}`;
+        yourScoreElement.innerText = `Your Score: ${score}`;
+        firstStart = false;
+      }, 500);
       return;
     }
   }
@@ -107,7 +107,7 @@ const snakeMove = () => {
   if (head.x === newApple.x && head.y === newApple.y) {
     generateRandomApple();
     score += 1;
-    playAppleSound()
+    playAppleSound();
     let updatedScore = document.querySelector("#score");
     updatedScore.innerText = `SCORE: ${score}`;
     const highScore = localStorage.getItem("highScore");
@@ -127,7 +127,7 @@ window.addEventListener("keydown", (event) => {
   let snakeHead = document.querySelector(".snakeHead");
   let directionOfNeck = neckDirection();
   let message = document.querySelector("#start-message");
-  if (document.querySelector("#gameover-container").style.display !== "none") {
+  if (!snakeAlive) {
     return;
   }
   if (
@@ -176,6 +176,7 @@ button.addEventListener("click", () => {
   let startMessage = document.querySelector("#start-message");
   startMessage.style.display = "inherit";
   gameStatus = "";
+  snakeAlive = true;
   headDirection = "right";
   score = 0;
   let updatedScore = document.querySelector("#score");
@@ -189,7 +190,7 @@ button.addEventListener("click", () => {
   initialLocalHighScore = localHighScore;
   document.getElementById(
     "high-score-2"
-  ).innerText = `🏆 HIGH SCORE: ${initialLocalHighScore}`;
+  ).innerText = `HIGH SCORE: ${initialLocalHighScore}`;
   newApple = firstApple;
   direction = { x: 1, y: 0 };
   render();
@@ -242,7 +243,7 @@ const neckDirection = () => {
 
 //function to render update to DOM
 const render = () => {
-    //function to remove old tiles
+  //function to remove old tiles
   document.querySelectorAll(".board-box").forEach((eachTile, index) => {
     if (eachTile.classList.contains("snakeBody")) {
       eachTile.classList.remove("snakeBody");
