@@ -62,6 +62,11 @@ const playAppleSound= ()=>{
   appleSound.play();  
 }
 
+//Function for game over sound
+const gameOverSound = new Audio('game-over.mp3');
+const playGameOverSound = ()=>{
+    gameOverSound.play();
+}
 
 // Snake movement function, responsible for snake moving,game-over conditions,score and reset
 const snakeMove = () => {
@@ -73,6 +78,7 @@ const snakeMove = () => {
 
   if (head.x < 0 || head.x >= boardSize || head.y < 0 || head.y >= boardSize) {
     gameStatus = "";
+    playGameOverSound();
     setTimeout(()=>{
 
         gameOverContainer.style.display = "inherit";
@@ -86,6 +92,7 @@ const snakeMove = () => {
   for (let i = 0; i < snake.length; i++) {
     if (snake[i].x === head.x && snake[i].y === head.y) {
       gameStatus = "";
+      playGameOverSound();
         setTimeout(()=>{
             gameOverContainer.style.display = "inherit";
             highscoreElement.innerText = `HIGH SCORE: ${localHighScore}`;
