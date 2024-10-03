@@ -56,6 +56,13 @@ const generateRandomApple = () => {
   }
 };
 
+// Function for chomp sound
+const appleSound = new Audio('chomp.mp3');
+const playAppleSound= ()=>{
+  appleSound.play();  
+}
+
+
 // Snake movement function, responsible for snake moving,game-over conditions,score and reset
 const snakeMove = () => {
   const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
@@ -93,6 +100,7 @@ const snakeMove = () => {
   if (head.x === newApple.x && head.y === newApple.y) {
     generateRandomApple();
     score += 1;
+    playAppleSound()
     let updatedScore = document.querySelector("#score");
     updatedScore.innerText = `SCORE: ${score}`;
     const highScore = localStorage.getItem("highScore");
