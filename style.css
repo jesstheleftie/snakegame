@@ -219,3 +219,9 @@ max-height:36px;
     height: 37px;   
     margin-left: auto;
 }
+
+#beat-high-score-message{
+    font-family: poppins;
+    color: rgb(95, 63, 46)
+    
+}

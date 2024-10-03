@@ -81,6 +81,7 @@ const snakeMove = () => {
   let yourScoreElement = document.querySelector(`#your-score`);
   let highscoreElement = document.querySelector("#high-score");
   localHighScore = localStorage.getItem("highScore") || 0;
+  let beatHighScoreMessageElement = document.querySelector('#beat-high-score-message');
 
   if (head.x < 0 || head.x >= boardSize || head.y < 0 || head.y >= boardSize) {
     gameStatus = "";
@@ -92,10 +93,12 @@ const snakeMove = () => {
       yourScoreElement.innerText = `Your Score: ${score}`;
       firstStart = false;
       if (score>initialLocalHighScore){
+        playBeatHighScoreSound();
         party.confetti(gameOverContainer), {
             count: party.variation.range(20, 40),
             spread:60
           };
+        beatHighScoreMessageElement.innerText=`You beat the high score!`
       }
     }, 500);
     return;
