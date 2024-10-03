@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Classic Retro Snake Game</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐍</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&family=Lemon&display=swap" rel="stylesheet">
@@ -19,8 +23,12 @@
 <body>
     <div id="background">
         <div id="app-container">
+            
             <div id="start-message">Use arrow keys to start!</div>
             <div id="app-box">
+                <button id="sound-button">
+                    <img id="sound-img" src="https://img.icons8.com/material-rounded/24/speaker.png" alt="sound on image"/>
+                </button>
                 <h3 id="app-title">Snake Game</h3>
                 <div id="score-container">
                     <img id="score-apple"  src="https://img.icons8.com/external-smashingstocks-flat-smashing-stocks/66/external-Apple-food-smashingstocks-flat-smashing-stocks.png" alt="external-Apple-food-smashingstocks-flat-smashing-stocks"/>
@@ -39,8 +47,10 @@
                 <img id="trophy-end" src="https://img.icons8.com/arcade/64/trophy.png" alt="gold trophy for high score"/>
                 <div id="high-score"></div>
                 <div id="your-score"></div>
-                <button id="play-again">Play Again</button>
-                <!-- <button id="end-game">End Game</button> -->
+                <button id="play-again">
+                    <div id="play-again-text">Play Again</div>
+                    <div id="click-enter">[ Hit ENTER ]</div>
+                </button>
             </div>
         </div>
         <div class="signature">created by jesstheleftie 2024</div>
