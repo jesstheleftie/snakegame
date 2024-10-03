@@ -56,19 +56,24 @@ const generateRandomApple = () => {
     generateRandomApple();
   }
 };
-
-// Function for chomp sound
+//Function to add sounds
+// Chomp sound
 const appleSound = new Audio("chomp.mp3");
 const playAppleSound = () => {
   appleSound.play();
 };
 
-//Function for game over sound
+//Game over sound
 const gameOverSound = new Audio("game-over.mp3");
 const playGameOverSound = () => {
   gameOverSound.play();
 };
 
+//Beat High Score sound
+const beatHighScoreSound = new Audio("level-up.mp3");
+const playBeatHighScoreSound =()=>{
+    beatHighScoreSound.play();
+};
 // Snake movement function, responsible for snake moving,game-over conditions,score and reset
 const snakeMove = () => {
   const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
@@ -106,10 +111,12 @@ const snakeMove = () => {
         yourScoreElement.innerText = `Your Score: ${score}`;
         firstStart = false;
         if (score>initialLocalHighScore){
+            playBeatHighScoreSound();
             party.confetti(gameOverContainer), {
                 count: party.variation.range(20, 40),
                 spread:60
               };
+            
           }
       }, 500);
       return;
