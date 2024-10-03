@@ -66,22 +66,25 @@ const snakeMove = () => {
 
   if (head.x < 0 || head.x >= boardSize || head.y < 0 || head.y >= boardSize) {
     gameStatus = "";
+    setTimeout(()=>{
 
-    gameOverContainer.style.display = "inherit";
-    highscoreElement.innerText = `HIGH SCORE: ${localHighScore}`;
-    yourScoreElement.innerText = `Your Score: ${score}`;
-    firstStart = false;
-
+        gameOverContainer.style.display = "inherit";
+        highscoreElement.innerText = `HIGH SCORE: ${localHighScore}`;
+        yourScoreElement.innerText = `Your Score: ${score}`;
+        firstStart = false;
+    }, 500)
     return;
+
   }
   for (let i = 0; i < snake.length; i++) {
     if (snake[i].x === head.x && snake[i].y === head.y) {
       gameStatus = "";
-
-      gameOverContainer.style.display = "inherit";
-      highscoreElement.innerText = `HIGH SCORE: ${localHighScore}`;
-      yourScoreElement.innerText = `Your Score: ${score}`;
-      firstStart = false;
+        setTimeout(()=>{
+            gameOverContainer.style.display = "inherit";
+            highscoreElement.innerText = `HIGH SCORE: ${localHighScore}`;
+            yourScoreElement.innerText = `Your Score: ${score}`;
+            firstStart = false;
+        },500)
       return;
     }
   }
