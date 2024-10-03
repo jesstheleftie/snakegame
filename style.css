@@ -1,6 +1,6 @@
 body{
     margin:0;
-    width:calc(100vw - 20px);
+    width:calc(100vw);
 }
 
 #background{
@@ -14,9 +14,10 @@ body{
     justify-content: center;
     align-items: center;
     height:100vh;
+    width:100vw;
 }
 #app-box{
-    height: 730px;
+    height: 740px;
     width: 600px;
     background-color: rgb(149, 107, 44);
     border-radius: 10px;
@@ -27,20 +28,28 @@ body{
 #app-title{
     font-family:"lemon", serif;
     text-align: center;
-    padding-top: 30px;
+    padding-top: 40px;
     font-size: 35px;
     color: rgb(216, 168, 47);
     text-shadow: 2px 3px 0 rgb(11, 11, 11);
     margin: 0;
 
 }
+.signature{
 
+   position:fixed; 
+   bottom:0; 
+   right:0;
+   padding:5px 15px;
+   font-family: poppins;
+   color: rgb(54, 39, 22);
+   font-size: 15px;
+}
 #score-container{
     display: flex;
-    width: 100vh;
+    width: 100%;
     margin-top: 0;
     align-items: center;
-    margin-left: 30px;
 
 }
 
@@ -49,12 +58,23 @@ body{
     color: rgb(236, 209, 169);
     font-size: 20px;
     font-weight: bold;
-    margin:0
 
+
+}
+#high-score-2{
+    font-family: "Istok Web", sans-serif;
+    color: rgb(236, 209, 169);
+    font-size: 20px;
+    font-weight: bold;
+    margin-left:auto;
+    margin-right:30px
 }
 #score-apple{
     height: 30px;
     width: 30px;
+    margin-left: 30px;
+    margin-bottom:5px;
+    margin-right:5px
     /* padding: 0 30px; */
 
 }
@@ -62,7 +82,6 @@ body{
 #board-container{
     display: flex;
     justify-content: center;  
-    margin: 37px 0 0px 0;
 
 }
 #board{
@@ -97,11 +116,14 @@ max-height:36px;
     height: 100px;
     border: 3px solid rgb(95, 63, 46);
     border-radius: 5px;
-    background-color:rgba(228, 189, 126, 0.6);
+    background-color:rgba(228, 189, 126, 0.75);
     color: rgb(95, 63, 46);
     font-family: poppins;
     font-weight: bold;
     font-size: 20px;
+    z-index: 3;
+    box-shadow: 5px 5px 10px rgb(95, 63, 46)
+
 }
 
 #gameover-container{
@@ -111,10 +133,11 @@ max-height:36px;
     justify-content: center;
     align-items: center;
     width: 300px;
-    height: 400px;
+    height: 300px;
     background-color: rgb(235, 206, 144);
     border: 4px solid rgb(95, 63, 46);
     border-radius: 7px;
+    z-index: 4;
 }
 
 #play-again{
@@ -126,31 +149,31 @@ max-height:36px;
     font-size: 20px;
     background-color: rgb(255, 255, 252);
     margin-top: 20px;
-    
-    
+    cursor: pointer;
 }
 
-#end-game{
-    font-family: poppins;
-    padding: 5px 25px;
-    color: darkgreen;
-    border: 3px solid darkgreen;
-    border-radius: 3px;
-    font-size: 20px;
-    background-color: rgb(255, 255, 252);
-    margin-top: 10px;
+#play-again:hover{
+    background-color: rgb(237, 237, 170)
 }
+
 #high-score{
     font-family: poppins;
+    font-size: 20px;
+    color: rgb(95, 63, 46)
 }
+
 #your-score{
     font-family:poppins;
+    font-size: 25px;
+    color: rgb(95, 63, 46);
+    margin-top: 30px;
 }
 
 .snakeBody{
     background-color: darkgreen !important;;
     z-index: 2;
     outline:2px solid darkgreen;
+ 
 }
 .snakeTail{
     border-top-left-radius: 50%;

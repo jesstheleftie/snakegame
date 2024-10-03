@@ -11,7 +11,13 @@ let direction = { x: 1, y: 0 };
 let headDirection = "right";
 let gameStatus = "";
 let score = 0;
+let firstStart = true;
 
+let localHighScore = localStorage.getItem("highScore") || 0;
+let initialLocalHighScore = localStorage.getItem("highScore") || 0;
+document.getElementById(
+  "high-score-2"
+).innerText = `🏆 HIGH SCORE: ${initialLocalHighScore}`;
 // Board Creation Functions
 
 const createBoard = () => {
@@ -51,18 +57,29 @@ const generateRandomApple = () => {
 
 const snakeMove = () => {
   const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
+  let gameOverContainer = document.querySelector("#gameover-container");
+  let yourScoreElement = document.querySelector(`#your-score`);
+  let highscoreElement = document.querySelector("#high-score");
+  localHighScore = localStorage.getItem("highScore") || 0;
 
   if (head.x < 0 || head.x >= boardSize || head.y < 0 || head.y >= boardSize) {
-    gameStatus = "over";
-    let yourScoreElement = document.querySelector(`#your-score`)
-    yourScoreElement.innerText = `Your Score: ${score}`
+    gameStatus = "";
+
+    gameOverContainer.style.display = "inherit";
+    highscoreElement.innerText = `🏆 HIGH SCORE: ${localHighScore}`;
+    yourScoreElement.innerText = `Your Score: ${score}`;
+    firstStart = false;
 
     return;
   }
   for (let i = 0; i < snake.length; i++) {
     if (snake[i].x === head.x && snake[i].y === head.y) {
-      gameStatus = "over";
+      gameStatus = "";
 
+      gameOverContainer.style.display = "inherit";
+      highscoreElement.innerText = `🏆 HIGH SCORE: ${localHighScore}`;
+      yourScoreElement.innerText = `Your Score: ${score}`;
+      firstStart = false;
       return;
     }
   }
@@ -73,6 +90,11 @@ const snakeMove = () => {
     score += 1;
     let updatedScore = document.querySelector("#score");
     updatedScore.innerText = `SCORE: ${score}`;
+    const highScore = localStorage.getItem("highScore");
+
+    if (!highScore || score > highScore) {
+      localStorage.setItem("highScore", score);
+    }
   } else {
     snake.pop();
   }
@@ -84,48 +106,74 @@ snakeMove();
 window.addEventListener("keydown", (event) => {
   let snakeHead = document.querySelector(".snakeHead");
   let directionOfNeck = neckDirection();
-  let message = document.querySelector('#start-message');
-  if (event.key === "ArrowUp" && directionOfNeck !== "up") {
-    if (direction.y === 0) {
-      direction = { x: 0, y: -1 };
-      headDirection = "up";
-      snakeHead.style.transform = "rotate(0deg)";
-      message.style.display='none';
-      gameStatus="running";
-    }
-  } else if (event.key === "ArrowDown" && directionOfNeck !== "down") {
-    if (direction.y === 0) {
-      direction = { x: 0, y: 1 };
-      headDirection = "down";
-      snakeHead.style.transform = "rotate(180deg)";
-       message.style.display='none';
-       gameStatus="running";
-    }
-  } else if (event.key === "ArrowLeft" && directionOfNeck !== "left") {
-    if (direction.x === 0) {
-      direction = { x: -1, y: 0 };
-      headDirection = "left";
-      snakeHead.style.transform = "rotate(270deg)";
-       message.style.display='none';
-       gameStatus="running";
-    }
-  } else if (event.key === "ArrowRight" && directionOfNeck !== "right") {
-    if (direction.x === 0) {
-      direction = { x: 1, y: 0 };
-      headDirection = "right";
-      snakeHead.style.transform = "rotate(90deg)";
-       message.style.display='none';
-       gameStatus="running";
-    }
+  let message = document.querySelector("#start-message");
+  if (document.querySelector("#gameover-container").style.display !== "none") {
+    return;
+  }
+  if (
+    event.key === "ArrowUp" &&
+    ((directionOfNeck !== "up" && direction.y === 0) || gameStatus === "")
+  ) {
+    direction = { x: 0, y: -1 };
+    headDirection = "up";
+    snakeHead.style.transform = "rotate(0deg)";
+    message.style.display = "none";
+    gameStatus = "running";
+  } else if (
+    event.key === "ArrowRight" &&
+    ((directionOfNeck !== "right" && direction.x === 0) || gameStatus === "")
+  ) {
+    direction = { x: 1, y: 0 };
+    headDirection = "right";
+    snakeHead.style.transform = "rotate(90deg)";
+    message.style.display = "none";
+    gameStatus = "running";
+  } else if (
+    event.key === "ArrowDown" &&
+    ((directionOfNeck !== "down" && direction.y === 0) || gameStatus === "")
+  ) {
+    direction = { x: 0, y: 1 };
+    headDirection = "down";
+    snakeHead.style.transform = "rotate(180deg)";
+    message.style.display = "none";
+    gameStatus = "running";
+  } else if (
+    event.key === "ArrowLeft" &&
+    directionOfNeck !== "left" &&
+    direction.x === 0
+  ) {
+    direction = { x: -1, y: 0 };
+    headDirection = "left";
+    snakeHead.style.transform = "rotate(270deg)";
+    message.style.display = "none";
+    gameStatus = "running";
   }
 });
+let button = document.getElementById(`play-again`);
+button.addEventListener("click", () => {
+  let gameOverContainer = document.querySelector("#gameover-container");
+  gameOverContainer.style.display = "none";
+  let startMessage = document.querySelector("#start-message");
+  startMessage.style.display = "inherit";
+  gameStatus = "";
+  headDirection = "right";
+  score = 0;
+  let updatedScore = document.querySelector("#score");
+  updatedScore.innerText = `SCORE: ${score}`;
+  snake = [
+    { x: 3, y: 10 },
+    { x: 2, y: 10 },
+    { x: 1, y: 10 },
+  ];
+  initialLocalHighScore = localHighScore;
+  document.getElementById(
+    "high-score-2"
+  ).innerText = `🏆 HIGH SCORE: ${initialLocalHighScore}`;
+  newApple = firstApple;
+  direction = { x: 1, y: 0 };
+  render();
+});
 
-button.addEventListener('click', ()=>{
-    let playAgainButton=document.querySelector(`#play-again`)
-    gameStatus='running'
-    
-
-})
 const tailDirection = () => {
   let snakeTail = snake[snake.length - 1];
   let snakeSecondLast = snake[snake.length - 2];
@@ -228,12 +276,12 @@ const render = () => {
         eyeBox.classList.add("eyeBox");
         let leftEyeBall = document.createElement("span");
         leftEyeBall.classList.add("eyeBall");
-        if (gameStatus === "over") {
+        if (gameStatus === "") {
           leftEyeBall.classList.add("deadEyes");
         }
         let rightEyeBall = document.createElement("span");
         rightEyeBall.classList.add("eyeBall");
-        if (gameStatus === "over") {
+        if (gameStatus === "") {
           rightEyeBall.classList.add("deadEyes");
         }
 
@@ -245,15 +293,18 @@ const render = () => {
   });
 
   let newAppleBox = document.getElementById(`${newApple.x},${newApple.y}`);
-  if (newAppleBox) {
-    newAppleBox.classList.add("redApple");
-    newAppleBox.style.transform = "";
-    const appleImage = document.createElement("img");
-    appleImage.src =
-      "https://img.icons8.com/external-smashingstocks-flat-smashing-stocks/66/external-Apple-food-smashingstocks-flat-smashing-stocks.png";
-    appleImage.style.maxWidth = "100%";
-    appleImage.style.maxHeight = "100%";
-    newAppleBox.appendChild(appleImage);
+
+  newAppleBox.classList.add("redApple");
+  newAppleBox.style.transform = "";
+  const appleImage = document.createElement("img");
+  appleImage.src =
+    "https://img.icons8.com/external-smashingstocks-flat-smashing-stocks/66/external-Apple-food-smashingstocks-flat-smashing-stocks.png";
+  appleImage.style.maxWidth = "100%";
+  appleImage.style.maxHeight = "100%";
+  newAppleBox.appendChild(appleImage);
+
+  if (firstStart) {
+    document.querySelector("#gameover-container").style.display = "none";
   }
 };
 
