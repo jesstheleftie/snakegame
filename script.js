@@ -18,6 +18,7 @@ let initialLocalHighScore = localStorage.getItem("highScore") || 0;
 document.getElementById(
   "high-score-2"
 ).innerText = `🏆 HIGH SCORE: ${initialLocalHighScore}`;
+
 // Board Creation Functions
 
 const createBoard = () => {
@@ -55,6 +56,7 @@ const generateRandomApple = () => {
   }
 };
 
+// Snake movement function, responsible for snake moving,game-over conditions,score and reset
 const snakeMove = () => {
   const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
   let gameOverContainer = document.querySelector("#gameover-container");
@@ -102,7 +104,7 @@ const snakeMove = () => {
 
 snakeMove();
 
-//Event Listners
+//Event Listners for user keyboard to snake movement and start of game
 window.addEventListener("keydown", (event) => {
   let snakeHead = document.querySelector(".snakeHead");
   let directionOfNeck = neckDirection();
@@ -165,6 +167,7 @@ button.addEventListener("click", () => {
     { x: 2, y: 10 },
     { x: 1, y: 10 },
   ];
+  //highscore storage and display
   initialLocalHighScore = localHighScore;
   document.getElementById(
     "high-score-2"
@@ -173,7 +176,7 @@ button.addEventListener("click", () => {
   direction = { x: 1, y: 0 };
   render();
 });
-
+//function to show direction of rounded tail
 const tailDirection = () => {
   let snakeTail = snake[snake.length - 1];
   let snakeSecondLast = snake[snake.length - 2];
@@ -195,6 +198,8 @@ const tailDirection = () => {
   }
   return result;
 };
+
+//function to show direction of head with restriction of 180degrees facing neck
 const neckDirection = () => {
   let snakeHead = snake[0];
   let snakeSecond = snake[1];
@@ -219,6 +224,7 @@ const neckDirection = () => {
 
 //function to render update to DOM
 const render = () => {
+    //function to remove old tiles
   document.querySelectorAll(".board-box").forEach((eachTile, index) => {
     if (eachTile.classList.contains("snakeBody")) {
       eachTile.classList.remove("snakeBody");
@@ -235,6 +241,7 @@ const render = () => {
     eachTile.innerText = "";
   });
 
+  //redraw new tiles and snake with the most updated variables
   snake.forEach((body, index) => {
     let snakeTile = document.getElementById(`${body.x},${body.y}`);
     if (snakeTile) {
@@ -269,7 +276,7 @@ const render = () => {
           }
         }
       }
-      //draw eyes
+      //drawing the eyes on the snake head and making them squint when hits wall or body
       let headElement = document.querySelector(".snakeHead");
       if (headElement && !headElement.hasChildNodes()) {
         let eyeBox = document.createElement("div");
@@ -292,6 +299,7 @@ const render = () => {
     }
   });
 
+  //insert image as apple to be generated randomly on the dom after being eaten
   let newAppleBox = document.getElementById(`${newApple.x},${newApple.y}`);
 
   newAppleBox.classList.add("redApple");
