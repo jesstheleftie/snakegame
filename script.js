@@ -157,8 +157,10 @@ const snakeMove = () => {
       return;
     }
   }
+//new head location
   snake.unshift(head);
 
+  // Function for after eating apple
   if (head.x === newApple.x && head.y === newApple.y) {
     generateRandomApple();
     score += 1;
@@ -410,6 +412,7 @@ const render = () => {
   let newAppleBox = document.getElementById(`${newApple.x},${newApple.y}`);
 
   newAppleBox.classList.add("redApple");
+  //reverse previous spin on cell
   newAppleBox.style.transform = "";
   const appleImage = document.createElement("img");
   appleImage.src =

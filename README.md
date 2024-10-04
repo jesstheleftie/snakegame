@@ -23,4 +23,4 @@ This project is a classic retro look **Snake Game** where the player controls a 
 
 ### Future Enhancements
 
-- **Sound Effects:** Mobile friendly version
+- **Responsive Sizing:** Mobile friendly version
